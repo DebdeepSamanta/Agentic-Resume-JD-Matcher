@@ -1,103 +1,127 @@
-# 🎯 Resume Analyzer AI — Agentic Resume–JD Matcher
+# Resume Analyzer AI
 
-An end-to-end AI agent pipeline that parses your resume, analyses the job description,
-scores ATS compatibility provides recommendations and tailored interview questions.
+A practical AI application that helps job seekers understand how well their resume matches a specific job description.
 
----
+The application analyzes a resume against a job posting, identifies matching and missing skills, calculates an ATS-style compatibility score, and generates personalized recommendations and interview questions.
 
-## Project Structure
+The project was built to explore agentic workflows using LangGraph while solving a real-world problem faced by candidates during the job application process.
 
-```
-resume-jd-matcher/
-│
-├── frontend/
-│   └── app.py                      # Streamlit UI
-│
-├── backend/
-│   ├── main.py                     # FastAPI app + endpoints
-│   │
-│   ├── graph/
-│   │   ├── state.py                # LangGraph AgentState TypedDict
-│   │   └── workflow.py             # LangGraph pipeline (nodes + edges)
-│   │
-│   ├── agents/
-│   │   ├── resume_parser.py        # Agent 1 — parse resume
-│   │   ├── jd_analyzer.py          # Agent 2 — analyse JD
-│   │   ├── skill_matcher.py        # Agent 3 — match skills
-│   │   ├── ats_scorer.py           # Agent 4 — ATS score
-│   │   ├── recommender.py          # Agent 5 — recommendations
-│   │   └── interview_generator.py  # Agent 6 — interview questions
-│   │
-│   ├── services/
-│   │   ├── llm.py                  # Groq LLM client (call_llm, call_llm_json)
-│   │   └── pdf_parser.py           # PyMuPDF text extraction
-│   │
-│   └── schemas/
-│       └── output.py               # All Pydantic v2 models
-│
-├── uploads/                        # Uploaded PDFs saved here
-├── .env                            # API keys (never commit)
-├── requirements.txt
-├── Dockerfile
-├── docker-entrypoint.sh
-└── README.md
-```
+## Features
 
----
+* Upload a resume in PDF format
+* Analyze any job description
+* Extract skills, experience, certifications, and projects from resumes
+* Identify matched and missing skills
+* Generate an ATS-style compatibility score
+* Provide actionable resume improvement suggestions
+* Create a personalized learning roadmap
+* Generate interview questions tailored to the candidate profile and target role
 
 ## Tech Stack
 
-| Layer         | Technology                     |
-|---------------|-------------------------------|
-| Frontend      | Streamlit                      |
-| Backend API   | FastAPI + Uvicorn              |
-| Orchestration | LangGraph                      |
-| LLM           | Groq — Llama 3.3 70B           |
-| PDF Parsing   | PyMuPDF (fitz)                 |
-| Validation    | Pydantic v2                    |
-| Deployment    | Docker                         |
+**Frontend**
 
----
+* Streamlit
 
+**Backend**
 
-## API Reference
+* FastAPI
+* LangGraph
 
-| Method | Path            | Description                           |
-|--------|-----------------|---------------------------------------|
-| GET    | `/health`       | Liveness check + model name           |
-| POST   | `/analyze`      | PDF upload + JD text → FinalReport    |
-| POST   | `/analyze-text` | Raw text resume + JD → FinalReport    |
-| GET    | `/docs`         | Swagger UI (auto-generated)           |
+**LLM**
 
----
+* Groq (Llama 3.3 70B)
 
-## Agent Pipeline
+**Supporting Libraries**
 
+* LangChain
+* PyMuPDF
+* Pydantic
+* Docker
+
+## How It Works
+
+The user uploads a resume and provides a job description.
+
+The system processes both inputs through a multi-step workflow:
+
+1. Resume Parsing
+
+   * Extracts structured information from the resume.
+
+2. Job Description Analysis
+
+   * Identifies required skills, preferred skills, and role expectations.
+
+3. Skill Matching
+
+   * Compares candidate skills against job requirements.
+
+4. ATS Scoring
+
+   * Calculates a compatibility score based on the match.
+
+5. Recommendations
+
+   * Suggests improvements and highlights skill gaps.
+
+6. Interview Preparation
+
+   * Generates role-specific interview questions.
+
+The final output is presented through an interactive Streamlit dashboard.
+
+## Running Locally
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+cd resume-jd-matcher
 ```
-Upload PDF + JD Text
-        │
-        ▼
-  FastAPI /analyze
-        │
-        ▼
-  LangGraph Workflow
-  ┌──────────────────────────────────────────────────────┐
-  │  Node 1: parse_resume        → ParsedResume          │
-  │  Node 2: analyze_jd          → ParsedJD              │
-  │  Node 3: match_skills        → SkillMatch            │
-  │  Node 4: score_ats           → ATSScore              │
-  │  Node 5: recommend           → Recommendation        │
-  │  Node 6: generate_interview  → InterviewQuestions    │
-  └──────────────────────────────────────────────────────┘
-        │
-        ▼
-   FinalReport (Pydantic)
-        │
-        ▼
-  Streamlit Dashboard
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
 ```
 
-Each node short-circuits on error — downstream agents are skipped safely.
+Create a `.env` file:
 
----
+```env
+GROQ_API_KEY=your_api_key
+```
 
+Start the backend:
+
+```bash
+uvicorn backend.main:app --reload
+```
+
+Start the frontend:
+
+```bash
+streamlit run frontend/app.py
+```
+
+## API Endpoints
+
+| Method | Endpoint      | Description                   |
+| ------ | ------------- | ----------------------------- |
+| GET    | /health       | Health check                  |
+| POST   | /analyze      | Resume PDF + Job Description  |
+| POST   | /analyze-text | Resume Text + Job Description |
+| GET    | /docs         | Swagger Documentation         |
+
+## Future Improvements
+
+* Resume rewriting and optimization
+* Multiple job description comparison
+* Historical analysis tracking
+* Authentication and user profiles
+* Support for additional resume formats
+* Deployment on cloud infrastructure
+
+## Motivation
+
+As someone interested in Generative AI and Agentic AI systems, I wanted to build a project that goes beyond a typical chatbot and demonstrates how multiple AI-driven components can work together to solve a practical problem. This project combines document understanding, structured information extraction, workflow orchestration, and personalized recommendations into a single application.
