@@ -122,6 +122,19 @@ streamlit run frontend/app.py
 * Support for additional resume formats
 * Deployment on cloud infrastructure
 
+## ScreenShot
+
+<img width="1888" height="916" alt="image" src="https://github.com/user-attachments/assets/aac7ad55-9a96-4b78-af8f-5c54d0d7766e" />
+
+<img width="1854" height="885" alt="image" src="https://github.com/user-attachments/assets/64d5e399-5890-43ee-9fc0-a932f3867bf4" />
+
+<img width="1851" height="620" alt="image" src="https://github.com/user-attachments/assets/a97ff05e-9d0f-441c-87e5-8a593bde60ea" />
+
+<img width="1902" height="934" alt="image" src="https://github.com/user-attachments/assets/5bb8ab47-a0cf-479a-9acc-06954b117b47" />
+
+<img width="1853" height="821" alt="image" src="https://github.com/user-attachments/assets/e25149fa-2ec6-4961-a5a2-595e4789a11b" />
+
+
 ## Motivation
 
 As someone interested in Generative AI and Agentic AI systems, I wanted to build a project that goes beyond a typical chatbot and demonstrates how multiple AI-driven components can work together to solve a practical problem. This project combines document understanding, structured information extraction, workflow orchestration, and personalized recommendations into a single application.
